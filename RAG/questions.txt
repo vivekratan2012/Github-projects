@@ -1,9 +1,35 @@
-"When did Canada become an independent country?"
+Here are a few example questions you could ask about the random story for testing purposes. These questions can help test how well your system retrieves information and generates relevant responses based on the uploaded content:
 
-"What is the capital of Canada?"
+### General Comprehension Questions:
 
-"Tell me about Banff National Park."
+1. **Who is the main character in the story?**
+2. **Where does the story take place?**
+3. **What was Elara searching for?**
+4. **What was the first clue to the treasure’s location?**
+5. **What did Elara find in the clearing?**
+6. **How did Elara defeat the serpent?**
+7. **What is the mysterious artifact that Elara found?**
+8. **Why did the ground shake when Elara touched the jewel?**
 
-"Where is French spoken in Canada?"
+### Detailed Inquiries:
 
-"What makes Canada a popular travel destination?"
+1. **What type of sword did Elara carry?**
+2. **How long did Elara spend in the forest before finding the clearing?**
+3. **What creatures did Elara encounter in the Forest of Kaldor?**
+4. **What was the color of the glowing jewel on the pedestal?**
+5. **How did Elara know the compass was important?**
+
+### Hypothetical Questions:
+
+1. **What would have happened if Elara didn’t defeat the serpent?**
+2. **If Elara hadn’t found the compass, where might she have gone next?**
+3. **What do you think Elara will do with the compass?**
+4. **What would you have done differently if you were Elara?**
+
+### Contextual and Interpretive:
+
+1. **Why do you think Elara chose to go into the dark tunnel?**
+2. **What does the compass symbolize in Elara’s journey?**
+3. **Why do you think the treasure was hidden in such a dangerous location?**
+
+These types of questions help test if the system can understand the details of the story, remember key points, and generate relevant responses. You could adapt these questions for specific sections of the story, or even ask the model to summarize sections to ensure it captures the context correctly.
