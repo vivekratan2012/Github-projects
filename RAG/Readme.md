@@ -1,4 +1,4 @@
-# 📄 RAG Chatbot with Local LLM for analyzing PDF
+#  RAG Chatbot with Local LLM for analyzing PDF
 
 This project is a PDF-powered chatbot built using **Streamlit**, **LangChain**, and a local **LLM (llama3.2)** via **Ollama**. Upload a PDF and ask questions about its content — the chatbot will answer based on what's in the document!
 
@@ -13,9 +13,9 @@ This project is a PDF-powered chatbot built using **Streamlit**, **LangChain**, 
 
 ---
 
-## 🖼️ Step-by-Step Instructions
+##  Step-by-Step Instructions
 
-### ✅ Step 1: Upload a PDF
+###  Step 1: Upload a PDF
 
 Upload any PDF file using the upload box.
 
@@ -23,7 +23,7 @@ Upload any PDF file using the upload box.
 
 ---
 
-### ✅ Step 2: Process and Embed
+###  Step 2: Process and Embed
 
 The app processes the PDF, splits it into chunks, and embeds it into a vector database.
 
@@ -31,7 +31,7 @@ The app processes the PDF, splits it into chunks, and embeds it into a vector da
 
 ---
 
-### ✅ Step 3: Ask Questions
+###  Step 3: Ask Questions
 
 Ask natural language questions about the PDF content.
 
@@ -39,7 +39,7 @@ Ask natural language questions about the PDF content.
 
 ---
 
-## 💻 How to Run
+##  How to Run
 
 1. **Install dependencies**:
 
