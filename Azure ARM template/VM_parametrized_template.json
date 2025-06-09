@@ -1,0 +1,148 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    // Parameter for the Azure region where the resources will be deployed
+    "location": {
+      "type": "string",
+      "defaultValue": "East US", // Default region is East US
+      "allowedValues": [
+        "East US",
+        "West US",
+        "North Europe"
+      ], // Allowed values for location
+      "metadata": {
+        "description": "The Azure region to deploy the resources."
+      }
+    },
+
+    // Parameter for the size of the virtual machine
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_B1s", // Default VM size is Standard_B1s
+      "allowedValues": [
+        "Standard_B1s",
+        "Standard_D2s_v3",
+        "Standard_F4s"
+      ], // Allowed values for VM size
+      "metadata": {
+        "description": "The size of the virtual machine."
+      }
+    },
+
+    // Admin username for the VM
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Admin username for the VM."
+      }
+    },
+
+    // Admin password for the VM (stored as a secure string)
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password for the VM."
+      }
+    },
+
+    // Parameter for the name of the Virtual Network
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "myVNet", // Default name for the virtual network
+      "metadata": {
+        "description": "The name of the Virtual Network."
+      }
+    },
+
+    // Parameter for the name of the Subnet within the Virtual Network
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "mySubnet", // Default name for the subnet
+      "metadata": {
+        "description": "The name of the Subnet."
+      }
+    }
+  },
+
+  // Resources to be deployed
+  "resources": [
+    // Deploy a Virtual Network with an associated Subnet
+    {
+      "type": "Microsoft.Network/virtualNetworks", // Resource type
+      "apiVersion": "2021-03-01", // API version for Virtual Network resource
+      "location": "[parameters('location')]", // Use the location parameter
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16" // Define the address space for the VNet
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnetName')]", // Use the subnet name parameter
+            "properties": {
+              "addressPrefix": "10.0.1.0/24" // Define the address space for the subnet
+            }
+          }
+        ]
+      }
+    },
+
+    // Deploy a Network Interface (NIC) connected to the above Virtual Network and Subnet
+    {
+      "type": "Microsoft.Network/networkInterfaces", // Resource type for NIC
+      "apiVersion": "2021-03-01", // API version for Network Interface resource
+      "location": "[parameters('location')]", // Use the location parameter
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]" // NIC depends on VNet creation
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1", // Name for the IP configuration
+            "properties": {
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName')), '/subnets/', parameters('subnetName'))]" 
+                // Create the subnet ID using the VNet and subnet names
+              },
+              "privateIPAllocationMethod": "Dynamic" // Private IP allocation method (Dynamic)
+            }
+          }
+        ]
+      }
+    },
+
+    // Deploy the Virtual Machine (VM)
+    {
+      "type": "Microsoft.Compute/virtualMachines", // Resource type for VM
+      "apiVersion": "2021-03-01", // API version for Virtual Machine resource
+      "location": "[parameters('location')]", // Use the location parameter
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]" // Use the vmSize parameter to set the VM size
+        },
+        "storageProfile": {
+          "osDisk": {
+            "createOption": "FromImage", // Create the OS disk from an image
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS" // Managed disk with Standard_LRS
+            }
+          }
+        },
+        "osProfile": {
+          "computerName": "myVM", // Name for the VM
+          "adminUsername": "[parameters('adminUsername')]", // Use the admin username parameter
+          "adminPassword": "[parameters('adminPassword')]" // Use the admin password parameter
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'myNIC')]" // Use the NIC created earlier
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

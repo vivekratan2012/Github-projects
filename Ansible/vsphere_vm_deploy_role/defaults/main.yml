@@ -1,0 +1,22 @@
+---
+vcenter_hostname: "vcenter.example.com"
+vcenter_username: "administrator@vsphere.local"
+vcenter_password: "your_password"
+datacenter_name: "Datacenter"
+cluster_name: "Cluster"
+datastore_name: "Datastore1"
+vm_name: "TestVM"
+vm_folder: "VMs"
+template_name: "UbuntuTemplate"
+vm_network: "VM Network"
+vm_num_cpus: 2
+vm_memory_mb: 2048
+vm_guest_id: "ubuntu64Guest"
+vm_ip_config:
+  type: dhcp   # change to 'static' for static IP
+  ip: "192.168.1.100"
+  netmask: "255.255.255.0"
+  gateway: "192.168.1.1"
+  dns_servers:
+    - "8.8.8.8"
+    - "8.8.4.4"

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    // Define the region where the resources will be deployed
+    "location": {
+      "value": "East US" // Location set to East US
+    },
+
+    // Specify the size of the virtual machine
+    "vmSize": {
+      "value": "Standard_B2ms" // VM size set to Standard_B2ms
+    },
+
+    // Admin username for the virtual machine
+    "adminUsername": {
+      "value": "azureadmin" // Admin username set to "azureadmin"
+    },
+
+    // Admin password for the virtual machine (in practice, should be handled securely)
+    "adminPassword": {
+      "value": "StrongPassword123!" // Set the password here (ensure it's strong)
+    },
+
+    // Define the name of the Virtual Network
+    "vnetName": {
+      "value": "MyVNet" // VNet name set to "MyVNet"
+    },
+
+    // Define the name of the Subnet within the Virtual Network
+    "subnetName": {
+      "value": "MySubnet" // Subnet name set to "MySubnet"
+    }
+  }
+}
