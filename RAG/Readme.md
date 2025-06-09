@@ -4,7 +4,7 @@ This project is a PDF-powered chatbot built using **Streamlit**, **LangChain**, 
 
 ---
 
-## 🛠 Features
+##  Features
 
 - Upload any PDF and get intelligent responses
 - Uses a local LLM (llama3.2) for privacy and speed
