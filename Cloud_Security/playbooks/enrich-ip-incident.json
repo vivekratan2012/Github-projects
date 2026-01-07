@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "triggers": {
+    "When_an_incident_is_created": {
+      "type": "ApiConnectionWebhook",
+      "inputs": {
+        "host": {
+          "connection": {
+            "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+          }
+        },
+        "path": "/incident-creation"
+      }
+    }
+  },
+  "actions": {
+    "Get_IP_Entities": {
+      "type": "Foreach",
+      "foreach": "@triggerBody()?['entities']",
+      "actions": {
+        "Check_IP_Entity": {
+          "type": "If",
+          "expression": {
+            "equals": [
+              "@items('Get_IP_Entities')?['type']",
+              "ip"
+            ]
+          },
+          "actions": {
+            "Add_Comment": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['azuresentinel']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "path": "/incidents/@{triggerBody()?['incidentId']}/comments",
+                "body": {
+                  "message": "IP entity detected in incident. Recommend threat intelligence review for source IP."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+// Brute Force Authentication Detection
+// MITRE ATT&CK: T1110 – Brute Force
+// Detects multiple failed login attempts from a single source
+// within a short time window, excluding known service accounts.
+
+SecurityEvent
+| where EventID == 4625
+| where AccountType != "Machine"
+| where Account !endswith "$"
+| where Account !in~ ("svc_backup", "svc_monitoring")
+| summarize
+    FailedAttempts = count(),
+    StartTime = min(TimeGenerated),
+    EndTime = max(TimeGenerated)
+    by Account, IpAddress, Computer, bin(TimeGenerated, 10m)
+| where FailedAttempts >= 5
+| extend
+    AccountEntity = Account,
+    IPEntity = IpAddress,
+    HostEntity = Computer
+| project
+    StartTime,
+    EndTime,
+    AccountEntity,
+    IPEntity,
+    HostEntity,
+    FailedAttempts

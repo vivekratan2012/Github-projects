@@ -1,0 +1,22 @@
+// Suspicious PowerShell Activity
+// MITRE ATT&CK: T1059.001 – PowerShell
+// Detects encoded commands and download cradle patterns.
+
+DeviceProcessEvents
+| where FileName =~ "powershell.exe"
+| where ProcessCommandLine has_any (
+    "-EncodedCommand",
+    "IEX",
+    "Invoke-Expression",
+    "DownloadString",
+    "FromBase64String"
+)
+| extend
+    AccountEntity = InitiatingProcessAccountName,
+    HostEntity = DeviceName
+| project
+    TimeGenerated,
+    HostEntity,
+    AccountEntity,
+    ProcessCommandLine,
+    InitiatingProcessParentFileName

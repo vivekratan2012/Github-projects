@@ -1,0 +1,26 @@
+// Impossible Travel Detection
+// MITRE ATT&CK: T1078 – Valid Accounts
+// Detects sign-ins from geographically distant locations
+// within an unrealistic time window.
+
+SigninLogs
+| where ResultType == 0
+| project UserPrincipalName, TimeGenerated, Location, IPAddress
+| extend Country = tostring(Location.countryOrRegion)
+| sort by UserPrincipalName asc, TimeGenerated asc
+| serialize
+| extend
+    PrevTime = prev(TimeGenerated),
+    PrevCountry = prev(Country)
+| where UserPrincipalName == prev(UserPrincipalName)
+| where Country != PrevCountry
+| where datetime_diff("minute", TimeGenerated, PrevTime) < 60
+| extend
+    AccountEntity = UserPrincipalName,
+    IPEntity = IPAddress
+| project
+    TimeGenerated,
+    AccountEntity,
+    PrevCountry,
+    Country,
+    IPEntity

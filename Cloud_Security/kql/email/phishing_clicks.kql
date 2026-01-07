@@ -1,0 +1,21 @@
+// Phishing Click Detection
+// MITRE ATT&CK: T1566 – Phishing
+// Detects users clicking links in emails classified as phishing.
+
+EmailEvents
+| where ThreatTypes has "Phish"
+| join kind=inner (
+    UrlClickEvents
+) on NetworkMessageId
+| summarize ClickCount = count() by
+    RecipientEmailAddress,
+    Url,
+    bin(TimeGenerated, 1h)
+| where ClickCount > 0
+| extend
+    AccountEntity = RecipientEmailAddress
+| project
+    TimeGenerated,
+    AccountEntity,
+    Url,
+    ClickCount
