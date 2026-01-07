@@ -128,7 +128,7 @@ This demonstrates understanding of Windows security telemetry and the ability to
 
 ---
 
-## Final Note for Recruiters & Hiring Managers
+## Demonstrated Skills & Capabilities
 
 This portfolio showcases proven SOC Analyst II skills focused on:
 
